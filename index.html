@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<!--
+  Design Brief — 一級棒鎖印行
+  ─────────────────────
+  One-line concept: 一間用老師傅手藝守護你家安全的鎖匠鋪
+  Mood: trustworthy, meticulous, analog
+  Palette:
+    background: #FAF9F6 (溫暖米白,帶點工坊的紙張感)
+    foreground: #1A1816 (深炭色,比純黑更有溫度)
+    primary:    #2C3E5C (深靛藍,傳達安全感與專業)
+  Type: display = Playfair + Noto Serif TC, body = Noto Sans TC
+  Hero type: 類型 2 — 分割式編輯排版
+  Services layout: 模板 B — 主打 + 次要
+  Hero tagline: 每一把鑰匙都是一份承諾
+  Motion notes: scroll fade-in, hover scale, button underline slide
+  What I chose NOT to do: 不用高科技感的設計,保持傳統工藝的溫度
+-->
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一級棒鎖印行 — 花蓮吉安專業鎖匠｜配鑰匙、開鎖、換鎖芯</title>
+    <meta name="description" content="花蓮吉安建國路上的老字號鎖匠店。30年經驗，從汽車晶片鑰匙到古董鎖都能處理。不只開鎖，更守護您的安全。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --font-display: 'Playfair Display', 'Noto Serif TC', serif;
+            --font-serif: 'Noto Serif TC', serif;
+            --font-sans: 'Noto Sans TC', -apple-system, sans-serif;
+            --background: #FAF9F6;
+            --foreground: #1A1816;
+            --muted: #605D59;
+            --border: #E8E5E0;
+            --primary: #2C3E5C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.7;
+            font-size: 1.0625rem;
+        }
+
+        .font-display {
+            font-family: var(--font-display);
+        }
+
+        .font-serif {
+            font-family: var(--font-serif);
+        }
+
+        .text-primary {
+            color: var(--primary);
+        }
+
+        .bg-primary {
+            background-color: var(--primary);
+        }
+
+        .border-custom {
+            border-color: var(--border);
+        }
+
+        .text-muted {
+            color: var(--muted);
+        }
+
+        /* Scroll animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Image hover */
+        .hover-scale {
+            overflow: hidden;
+        }
+
+        .hover-scale img {
+            transition: transform 0.6s ease-out;
+        }
+
+        .hover-scale:hover img {
+            transform: scale(1.04);
+        }
+
+        /* Button underline */
+        .btn-underline {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .btn-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-underline:hover::after {
+            transform: scaleX(1);
+        }
+
+        .btn-underline:active {
+            transform: scale(0.97);
+        }
+
+        /* Hero text animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-text span {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .hero-text span:nth-child(1) { animation-delay: 0.1s; }
+        .hero-text span:nth-child(2) { animation-delay: 0.15s; }
+        .hero-text span:nth-child(3) { animation-delay: 0.2s; }
+        .hero-text span:nth-child(4) { animation-delay: 0.25s; }
+        .hero-text span:nth-child(5) { animation-delay: 0.3s; }
+        .hero-text span:nth-child(6) { animation-delay: 0.35s; }
+        .hero-text span:nth-child(7) { animation-delay: 0.4s; }
+        .hero-text span:nth-child(8) { animation-delay: 0.45s; }
+        .hero-text span:nth-child(9) { animation-delay: 0.5s; }
+
+        /* Custom details styling */
+        details summary {
+            cursor: pointer;
+            list-style: none;
+            position: relative;
+            padding-right: 2rem;
+        }
+
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details summary::after {
+            content: '+';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary::after {
+            transform: translateY(-50%) rotate(45deg);
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "一級棒鎖印行",
+        "description": "花蓮吉安專業鎖匠店，提供配鑰匙、開鎖、換鎖芯等服務",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "建國路一段144之2號",
+            "addressLocality": "吉安鄉",
+            "addressRegion": "花蓮縣",
+            "addressCountry": "TW"
+        },
+        "telephone": "+886-3-8569085",
+        "url": "https://www.facebook.com/pppppeter1983/"
+    }
+    </script>
+<style id="5888-unified-filter">
+  img[data-5888-slot] {
+    filter: saturate(1.08) contrast(1.04) brightness(1.02);
+  }
+</style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="relative h-screen min-h-[85vh] flex items-center">
+        <div class="grid grid-cols-12 w-full h-full">
+            <!-- Left side: Text -->
+            <div class="col-span-12 md:col-span-5 flex flex-col justify-center px-8 md:px-12 lg:px-16 py-16">
+                <h1 class="hero-text font-display text-clamp leading-[0.95] tracking-[-0.03em] mb-6" style="font-size: clamp(3.5rem, 10vw, 8rem);">
+                    <span>每</span><span>一</span><span>把</span><span>鑰</span><span>匙</span><br>
+                    <span>都</span><span>是</span><span>一</span><span>份</span><span>承</span><span>諾</span>
+                </h1>
+                <p class="text-muted mb-8 max-w-md">30年老師傅的手藝，從汽車晶片到古董鎖都能處理。我們不只開鎖，更守護您的安全。</p>
+                <div class="space-y-2 text-sm text-muted">
+                    <p>一級棒鎖印行</p>
+                    <p>花蓮縣吉安鄉建國路一段144之2號</p>
+                    <p>03-8569085</p>
+                </div>
+            </div>
+            <!-- Right side: Image -->
+            <div class="col-span-12 md:col-span-7 relative h-64 md:h-full">
+                <div class="hover-scale h-full">
+                    <img src="https://vy1fkih2qoytg2gp.public.blob.vercel-storage.com/uploads/srbow_tw_gmail_com/hero-jxUcBw7e.jpg" 
+                         data-5888-slot="hero" 
+                         alt="一級棒鎖印行店面外觀" 
+                         class="w-full h-full object-cover"
+                         loading="lazy">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Services Section -->
+        <section class="fade-in-section py-20 md:py-32 px-8 md:px-12 lg:px-16">
+            <div class="max-w-[1360px] mx-auto">
+                <h2 class="font-serif font-bold mb-16 text-primary" style="font-size: clamp(2.25rem, 5vw, 4.5rem);">
+                    專業服務
+                </h2>
+                
+                <div class="grid grid-cols-12 gap-6">
+                    <!-- Main large image -->
+                    <div class="col-span-12 md:col-span-7">
+                        <div class="hover-scale h-full">
+                            <img src="https://vy1fkih2qoytg2gp.public.blob.vercel-storage.com/uploads/srbow_tw_gmail_com/product1-5JHxakza.jpg"
+                                 data-5888-slot="product1"
+                                 alt="專業配鑰匙服務"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy">
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="font-serif font-bold text-xl mb-2">精準配鑰匙</h3>
+                            <p class="text-muted text-sm">從傳統銅鑰到汽車晶片鑰匙。每把都經過三次測試才交到您手上。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Side smaller image -->
+                    <div class="col-span-12 md:col-span-5">
+                        <div class="hover-scale">
+                            <img src="https://vy1fkih2qoytg2gp.public.blob.vercel-storage.com/uploads/srbow_tw_gmail_com/product2-cXpPT8bS.jpg"
+                                 data-5888-slot="product2"
+                                 alt="各式鎖具與鑰匙"
+                                 class="w-full object-cover"
+                                 style="height: 400px;"
+                                 loading="lazy">
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="font-serif font-bold text-xl mb-2">緊急開鎖</h3>
+                            <p class="text-muted text-sm">24小時待命。不破壞鎖體是我們的原則。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service list -->
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                    <div class="border-t border-custom pt-6">
+                        <h4 class="font-serif font-bold mb-2">汽機車鑰匙</h4>
+                        <p class="text-sm text-muted">晶片複製 / 遙控器配對 / 鑰匙遺失處理</p>
+                    </div>
+                    <div class="border-t border-custom pt-6">
+                        <h4 class="font-serif font-bold mb-2">居家門鎖</h4>
+                        <p class="text-sm text-muted">換鎖芯 / 裝電子鎖 / 老鎖翻新</p>
+                    </div>
+                    <div class="border-t border-custom pt-6">
+                        <h4 class="font-serif font-bold mb-2">特殊鎖具</h4>
+                        <p class="text-sm text-muted">保險箱 / 古董鎖 / 進口鎖具維修</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="fade-in-section py-20 md:py-32 px-8 md:px-12 lg:px-16 bg-white">
+            <div class="max-w-[1200px] mx-auto">
+                <div class="grid grid-cols-12 gap-8 items-center">
+                    <div class="col-span-12 md:col-span-6 md:col-start-2">
+                        <div class="relative">
+                            <span class="absolute -top-8 -left-4 text-primary opacity-15" style="font-size: 8rem; font-family: var(--font-serif);">"</span>
+                            <h2 class="font-serif font-bold mb-8 relative z-10" style="font-size: clamp(2.25rem, 5vw, 4.5rem);">
+                                關於我們
+                            </h2>
+                            <div class="space-y-6 text-muted">
+                                <p>這間店從民國82年開到現在。老闆說他16歲就開始學配鑰匙，學了三年才敢自己開店。</p>
+                                <div class="w-10 h-px bg-border"></div>
+                                <p>「現在的鎖越來越精密，但原理都一樣 — 就是要讓對的人進得去，錯的人進不來。」他一邊磨著鑰匙一邊說。店裡沒有電腦切割機，每把鑰匙都是手工磨製。慢？是慢了點。但磨出來的鑰匙插進鎖孔時，那個順滑感是機器做不出來的。</p>
+                                <p>我們處理過被反鎖在家的阿嬤、鑰匙斷在鎖孔裡的上班族、還有買了二手古董櫃卻沒鑰匙的收藏家。每個案子都是一個故事，每把鑰匙都是一份信任。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="fade-in-section py-20 md:py-32 px-8 md:px-12 lg:px-16">
+            <div class="max-w-[800px] mx-auto">
+                <h2 class="font-serif font-bold mb-12" style="font-size: clamp(2.25rem, 5vw, 4.5rem);">
+                    常見問題
+                </h2>
+                
+                <div class="space-y-6">
+                    <details class="border-t border-custom pt-6">
+                        <summary class="font-serif font-bold text-lg">汽車晶片鑰匙也能配嗎？</summary>
+                        <p class="mt-4 text-muted">可以。大部分國產車和常見進口車都能處理。特殊車款需要先看過實體鑰匙才能確定。配一把約需30分鐘。</p>
+                    </details>
+                    
+                    <details class="border-t border-custom pt-6">
+                        <summary class="font-serif font-bold text-lg">家裡的老鎖打不開怎麼辦？</summary>
+                        <p class="mt-4 text-muted">先別急著換鎖。80%的情況是鎖芯卡住或生鏽，清潔上油就能恢復。真的壞了再換不遲，老鎖有老鎖的好。</p>
+                    </details>
+                    
+                    <details class="border-t border-custom pt-6">
+                        <summary class="font-serif font-bold text-lg">營業時間是？</summary>
+                        <p class="mt-4 text-muted">平日早上8點到晚上7點，週六到下午5點。週日公休。但如果您被反鎖在外，隨時打電話，我們24小時待命。</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="fade-in-section py-20 md:py-32 px-8 md:px-12 lg:px-16 bg-white">
+            <div class="max-w-[1200px] mx-auto">
+                <h2 class="font-serif font-bold mb-12" style="font-size: clamp(2.25rem, 5vw, 4.5rem);">
+                    聯絡我們
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="space-y-8">
+                        <div>
+                            <p class="text-sm text-muted mb-2">地址</p>
+                            <p class="text-xl font-serif">花蓮縣吉安鄉建國路一段144之2號</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-sm text-muted mb-2">電話</p>
+                            <p class="text-xl font-serif">03-8569085</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-sm text-muted mb-2">營業時間</p>
+                            <p class="text-xl font-serif">週一至週五 08:00-19:00</p>
+                            <p class="text-xl font-serif">週六 08:00-17:00</p>
+                            <p class="text-xl font-serif">週日公休</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <p class="text-muted">30年來，我們就在建國路上這個位置。花蓮人都知道，鑰匙的問題找一級棒就對了。</p>
+                        
+                        <div class="space-y-4">
+                            <a href="https://maps.app.goo.gl/2r6B4rAMzn5442cz8" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="inline-block btn-underline text-primary font-bold"
+                               aria-label="在 Google 地圖查看一級棒鎖印行位置">
+                                在 Google 地圖開啟 →
+                            </a>
+                            
+                            <br>
+                            
+                            <a href="https://www.facebook.com/pppppeter1983/" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="inline-block btn-underline text-primary font-bold"
+                               aria-label="前往一級棒鎖印行 Facebook 粉絲專頁">
+                                Facebook 粉絲專頁 →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-8 px-8 text-center text-sm text-muted border-t border-custom">
+        <p>一級棒鎖印行 ｜ 2026 Design by 幸福瓢蟲手作雜貨</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
